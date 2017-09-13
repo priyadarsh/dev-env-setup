@@ -1,16 +1,28 @@
 sudo apt-get purge lxc-docker*
 sudo apt-get purge docker.io*
-sudo apt-get update
-sudo apt-get install apt-transport-https ca-certificates
-sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
-sudo echo "deb https://apt.dockerproject.org/repo debian-jessie main" > /etc/apt/sources.list.d/docker.list
 
 sudo apt-get update
-sudo apt-cache policy docker-engine
 
-sudo apt-get install docker-engine
+sudo apt-get install apt-transport-https ca-certificates software-properties-common curl
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo apt-key fingerprint 0EBFCD88
+
+sudo add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+
+sudo apt-get update
+
+sudo apt-get install docker-ce
+
+sudo docker run hello-world
+
 sudo service docker start
 sudo groupadd docker
-sudo gpasswd -a pk docker
+sudo gpasswd -a user docker
 sudo service docker restart
 newgrp docker
+
+#Start docker on server start up
+sudo systemctl enable docker
