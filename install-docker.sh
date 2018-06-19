@@ -28,8 +28,8 @@ sudo docker run hello-world
 sudo service docker start
 sudo groupadd docker
 
-sudo gpasswd -a <replace with your system user> docker
-sudo usermod -aG docker <replace with your system user> 
+sudo gpasswd -a $USER docker
+sudo usermod -aG docker $USER
 
 sudo service docker restart
 newgrp docker
